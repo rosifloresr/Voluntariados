@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  api:
+    container_name: voluntariados_api_test
+    build: .
+    command: npm run test
+    env_file:
+      - .env.test
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  db:
+    container_name: voluntariados_db_test
+    image: postgres:15
+    environment:
+      POSTGRES_DB: voluntariados_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
